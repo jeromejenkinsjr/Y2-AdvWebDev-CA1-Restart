@@ -13,7 +13,7 @@ class PerformanceController extends Controller
      */
     public function index()
     {
-       $performances = Book::all();
+       $performances = Performance::all();
        return view('performances.index', compact('performances'));
     }
 
