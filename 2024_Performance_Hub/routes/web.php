@@ -21,4 +21,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/performances', [PerformanceController::class, 'index'])->name('performances.index');
 Route::get('/performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+Route::get('/performances/create', [PerformanceController::class, 'create'])->name('performances.create');
+Route::post('/performances', [PerformanceController::class, 'store'])->name('performances.store');
 require __DIR__.'/auth.php';
