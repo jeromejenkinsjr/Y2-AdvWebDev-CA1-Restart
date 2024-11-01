@@ -12,16 +12,13 @@
                     <h3 class="font-semibold text-lg mb-4">List of Performances:</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($performances as $performance)
-                            <x-performance-card
+                        <a href="{{ route('performances.show', $performance) }}">    
+                        <x-performance-card
                                 :title="$performance->title"
-                                :piece="$performance->piece"
-                                :composer="$performance->composer"
-                                :musician="$performance->musician"
                                 :event="$performance->event"
-                                :description="$performance->description"
                                 :image="$performance->image"
-
                             />
+</a>
                         @endforeach
                     </div>
                 </div>
