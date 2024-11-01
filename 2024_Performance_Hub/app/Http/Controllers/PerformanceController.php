@@ -22,7 +22,7 @@ class PerformanceController extends Controller
      */
     public function create()
     {
-        //
+        return view('performances.create');
     }
 
     /**
