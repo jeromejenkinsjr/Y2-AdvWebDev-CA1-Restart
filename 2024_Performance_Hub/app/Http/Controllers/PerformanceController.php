@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Performance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PerformanceController extends Controller
 {
@@ -30,7 +31,31 @@ class PerformanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+'title' => 'required',
+'piece' => 'required',
+'event' => 'required',
+'composer' => 'required',
+'description' => 'required|max:500',
+'image' => 'required|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/'), $imageName);
+        }
+
+        Performance::create([
+'title' => $request->title,
+'piece' => $request->piece,
+'composer' => $request->composer,
+'event' => $request->event,
+'description' => $request->description,
+'image' => $imageName,
+        ]);
+
+        return to_route('performances.index')->with('success', 'Book created successfully!');
     }
 
     /**
