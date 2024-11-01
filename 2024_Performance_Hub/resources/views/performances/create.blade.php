@@ -10,7 +10,7 @@
 <div class="p-6 ☐ text-gray-900">
 <h3 class="font-semibold text-lg mb-4">Add a New Performance: </h3>
 {{-- Using the PerformanceForm component for performance creation --}}
-<x-book-form
+<x-performance-form
 :action="route('performances.store')"
 :method="'POST'"
 />
