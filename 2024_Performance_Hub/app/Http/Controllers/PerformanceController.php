@@ -35,6 +35,8 @@ class PerformanceController extends Controller
 'title' => 'required',
 'piece' => 'required',
 'event' => 'required',
+'musician' => 'required',
+'duration' => 'required|date_format:H:i:s',
 'composer' => 'required',
 'description' => 'required|max:500',
 'image' => 'required|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
@@ -50,9 +52,13 @@ class PerformanceController extends Controller
 'title' => $request->title,
 'piece' => $request->piece,
 'composer' => $request->composer,
+'musician' => $request->musician,
+'duration' => $request->duration,
 'event' => $request->event,
 'description' => $request->description,
 'image' => $imageName,
+'created_at' => now(),
+        'updated_at' => now(),
         ]);
 
         return to_route('performances.index')->with('success', 'Book created successfully!');

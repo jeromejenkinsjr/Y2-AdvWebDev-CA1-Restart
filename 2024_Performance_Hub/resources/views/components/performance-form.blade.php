@@ -37,6 +37,24 @@
         @enderror
     </div>
 
+     <!-- Duration -->
+<div class="mb-4">
+    <label for="duration" class="block text-sm text-gray-700">Duration</label>
+    <input
+        type="time"
+        name="duration"
+        id="duration"
+        value="{{ old('duration', $performance->duration ?? '') }}"
+        required
+        step="1"
+        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+    />
+    @error('duration')
+        <p class="text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+
     <!-- Composer -->
     <div class="mb-4">
         <label for="composer" class="block text-sm text-gray-700">Composer</label>
