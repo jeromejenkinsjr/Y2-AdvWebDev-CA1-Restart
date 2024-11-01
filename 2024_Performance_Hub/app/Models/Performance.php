@@ -14,6 +14,7 @@ class Performance extends Model
         'piece', 
         'composer', 
         'musician', 
+        'duration', 
         'event', 
         'description', 
         'image',

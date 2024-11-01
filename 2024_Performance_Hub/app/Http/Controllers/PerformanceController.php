@@ -46,6 +46,7 @@ class PerformanceController extends Controller
 
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images/'), $imageName);
+            $imageName = 'images/' . $imageName; 
         }
 
         Performance::create([
