@@ -6,7 +6,7 @@
 
     <!-- Performance Image -->
     <div class="overflow-hidden rounded-lg mb-4 flex justify-center">
-        <img src="{{ asset('images/' . $image) }}" alt="{{ $title }}" class="w-full max-w-xs h-auto object-cover">
+        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full max-w-xs h-auto object-cover">
     </div>
 
     <!-- Piece Name -->
