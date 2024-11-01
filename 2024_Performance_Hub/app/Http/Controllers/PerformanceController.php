@@ -38,7 +38,7 @@ class PerformanceController extends Controller
      */
     public function show(Performance $performance)
     {
-        //
+        return view('performances.show')->with('performance', $performance);
     }
 
     /**
