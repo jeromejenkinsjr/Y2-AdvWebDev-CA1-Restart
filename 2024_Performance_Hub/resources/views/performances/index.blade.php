@@ -15,10 +15,12 @@
                             <x-performance-card
                                 :title="$performance->title"
                                 :piece="$performance->piece"
-                                :author="$performance->author"
+                                :composer="$performance->composer"
                                 :musician="$performance->musician"
                                 :event="$performance->event"
                                 :description="$performance->description"
+                                :image="$performance->image"
+
                             />
                         @endforeach
                     </div>
