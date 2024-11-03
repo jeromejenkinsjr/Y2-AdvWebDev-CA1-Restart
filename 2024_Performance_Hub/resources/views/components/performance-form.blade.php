@@ -139,9 +139,24 @@
     @endisset
 
     <!-- Submit Button -->
-    <div>
+    <div class="flex items-center space-x-4 mt-4">
         <x-primary-button>
             {{ isset($performance) ? 'Update Performance' : 'Add Performance' }}
         </x-primary-button>
+
+        <!-- Cancel Button / When it's clicked it runs the function confirmCancel -->
+        <x-danger-button type="button" onclick="confirmCancel()">
+        Cancel
+    </x-danger-button>
     </div>
 </form>
+
+<!-- Confirmation Dialog Script -->
+<!-- If the confirmation comes back as true (the window pop-up on the browser) it will run the code below which directs the user to the performances index page. -->
+<script>
+    function confirmCancel() {
+        if (confirm('Are you sure you\'d like to cancel? All progress will be lost.')) {
+            window.location.href = "{{ route('performances.index') }}";
+        }
+    }
+</script>
