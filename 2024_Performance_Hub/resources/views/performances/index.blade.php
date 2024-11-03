@@ -26,7 +26,8 @@
                                 :title="$performance->title"
                                 :event="$performance->event"
                                 :image="$performance->image"
-                            />
+                                :performanceId="$performance->id"
+                                />
 </a>
                         @endforeach
                     </div>
