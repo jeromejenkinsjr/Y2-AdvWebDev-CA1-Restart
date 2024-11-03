@@ -108,6 +108,8 @@ class PerformanceController extends Controller
         $performance->image = $imageName;
     }
 
+// I forgot to explain in the previous commit, but the reason for individually referencing $performance->attribute is that unlike the store method which uses Performance::create() to set all attributes at once, there's no direct equivalent method for updating all attributes together. This is why I update each attribute individually before calling $performance->save(). After looking into it, I did see I could have also used $performance->update() with an array of updated attributes which works similarly to create().
+
     $performance->title = $request->title;
     $performance->piece = $request->piece;
     $performance->composer = $request->composer;
