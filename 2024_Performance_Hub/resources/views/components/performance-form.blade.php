@@ -124,7 +124,6 @@
             type="file"
             name="image"
             id="image"
-            {{ isset($performance) ? '' : 'required' }}
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
         />
         @error('image')

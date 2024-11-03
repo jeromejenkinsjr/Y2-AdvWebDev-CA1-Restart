@@ -39,7 +39,7 @@ class PerformanceController extends Controller
 'duration' => 'required|date_format:H:i:s',
 'composer' => 'required',
 'description' => 'required|max:500',
-'image' => 'required|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
+'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -86,7 +86,41 @@ class PerformanceController extends Controller
      */
     public function update(Request $request, Performance $performance)
     {
-        //
+         // Validate the incoming data
+    $request->validate([
+        'title' => 'required',
+        'piece' => 'required',
+        'event' => 'required',
+        'musician' => 'required',
+        'duration' => 'required|date_format:H:i:s',
+        'composer' => 'required',
+        'description' => 'required|max:500',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048', // Image is optional during update so that the user is not required to upload a new image at each update request.
+    ]);
+
+    // Handle the uploaded image if there is one.
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/'), $imageName);
+        $imageName = 'images/' . $imageName;
+
+        // Update the image field in the model.
+        $performance->image = $imageName;
+    }
+
+    $performance->title = $request->title;
+    $performance->piece = $request->piece;
+    $performance->composer = $request->composer;
+    $performance->musician = $request->musician;
+    $performance->duration = $request->duration;
+    $performance->event = $request->event;
+    $performance->description = $request->description;
+
+    $performance->updated_at = now();
+    $performance->save();
+
+    // Redirect back to the index page with a success message
+    return to_route('performances.index')->with('success', 'Performance updated successfully!');
     }
 
     /**
