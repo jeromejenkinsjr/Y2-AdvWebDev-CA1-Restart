@@ -12,9 +12,22 @@ class PerformanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-       $performances = Performance::all();
+
+        // This gets the search term from the request if it exists
+        $search = $request->input('search');
+
+        if ($search) {
+            $query->where('title', 'LIKE', '%' . $search . '%')
+                  ->orWhere('piece', 'LIKE', '%' . $search . '%')
+                  ->orWhere('composer', 'LIKE', '%' . $search . '%')
+                  ->orWhere('musician', 'LIKE', '%' . $search . '%')
+                  ->orWhere('event', 'LIKE', '%' . $search . '%');
+        }
+    
+        // Get all or filtered performances
+        $performances = $query->get();
        return view('performances.index', compact('performances'));
     }
 
