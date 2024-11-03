@@ -78,7 +78,7 @@ class PerformanceController extends Controller
      */
     public function edit(Performance $performance)
     {
-        return view('performances.show')->with('performance', $performance);
+        return view('performances.edit')->with('performance', $performance);
     }
 
     /**
