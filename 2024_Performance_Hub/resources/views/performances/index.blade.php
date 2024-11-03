@@ -14,6 +14,23 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">List of Performances:</h3>
+
+                    <!-- Search Form -->
+                    <form action="{{ route('performances.index') }}" method="GET" class="mb-6">
+                        <div class="flex items-center">
+                            <input 
+                                type="text" 
+                                name="search" 
+                                placeholder="Search performances..." 
+                                value="{{ request('search') }}" 
+                                class="w-full border-gray-300 rounded-md shadow-sm p-2"
+                            />
+                            <x-primary-button class="ml-2">
+                                Search
+                            </x-primary-button>
+                        </div>
+                    </form>
+                    
                     <div class="mb-4">
     <a href="{{ route('performances.create') }}" class="btn btn-primary">
         Add New Performance
