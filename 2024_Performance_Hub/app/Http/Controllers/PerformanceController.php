@@ -18,6 +18,8 @@ class PerformanceController extends Controller
         // This gets the search term from the request if it exists
         $search = $request->input('search');
 
+        $query = Performance::query();
+
         if ($search) {
             $query->where('title', 'LIKE', '%' . $search . '%')
                   ->orWhere('piece', 'LIKE', '%' . $search . '%')
