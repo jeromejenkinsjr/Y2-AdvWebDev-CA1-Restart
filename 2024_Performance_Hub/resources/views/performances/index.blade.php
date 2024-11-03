@@ -27,7 +27,7 @@
                                 :image="$performance->image"
                                 :performanceId="$performance->id"
                                 />
-                                                        @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
