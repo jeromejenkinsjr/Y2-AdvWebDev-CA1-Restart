@@ -28,4 +28,7 @@ Route::post('/performances', [PerformanceController::class, 'store'])->name('per
 
 Route::get('/performances/{performance}/edit', [PerformanceController::class, 'edit'])->name('performances.edit');
 Route::put('/performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
+
+Route::delete('/performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
+
 require __DIR__.'/auth.php';

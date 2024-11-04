@@ -145,6 +145,10 @@ class PerformanceController extends Controller
      */
     public function destroy(Performance $performance)
     {
-        //
+       // Deletes the performance from the database.
+    $performance->delete();
+
+    // Redirects back to the index page with a success message.
+    return to_route('performances.index')->with('success', 'Performance deleted successfully.');
     }
 }

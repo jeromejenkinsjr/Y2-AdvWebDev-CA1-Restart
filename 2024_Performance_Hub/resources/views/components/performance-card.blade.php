@@ -20,5 +20,23 @@
         <a href="{{ route('performances.create') }}" class="btn btn-secondary">
             Create New Performance
         </a>
+
+         <!-- Delete Button -->
+         <form action="{{ route('performances.destroy', $performanceId) }}" method="POST" onsubmit="return confirmDelete()">
+            @csrf
+            @method('DELETE')
+            <x-danger-button type="submit">
+                Delete
+            </x-danger-button>
+        </form>
+
     </div>
 </div>
+
+<!-- Confirmation Dialog Script -->
+<!-- Works exactly like confirmCancel in the performance-form where the value of built-in JavaScript command, 'confirm', will determine whether or not to proceed with confirming the deletion or staying on the page-->
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this performance? This action cannot be undone.');
+    }
+</script>
