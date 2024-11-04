@@ -95,6 +95,9 @@ class PerformanceController extends Controller
      */
     public function show(Performance $performance)
     {
+
+        $performance->load('reviews.user');
+
         return view('performances.show')->with('performance', $performance);
     }
 
