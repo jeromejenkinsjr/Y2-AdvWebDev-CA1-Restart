@@ -17,6 +17,8 @@ class PerformanceController extends Controller
 
         // This gets the search term from the request if it exists
         $search = $request->input('search');
+        // Gets the sorting options from the request
+        $sort = $request->input('sort');
 
         $query = Performance::query();
 
@@ -28,6 +30,14 @@ class PerformanceController extends Controller
                   ->orWhere('event', 'LIKE', '%' . $search . '%');
         }
     
+        if ($sort == 'title_asc') {
+                // Sort the query results by the 'title' attribute in ascending order when the sort parameter is set to 'title_asc'.
+            $query->orderBy('title', 'asc');
+        } elseif ($sort == 'title_desc') {
+                // Sort the query results by the 'title' attribute in descending order when the sort parameter is set to 'title_desc'.
+            $query->orderBy('title', 'desc');
+        }
+
         // Get all or filtered performances
         $performances = $query->get();
        return view('performances.index', compact('performances'));
