@@ -18,6 +18,39 @@
 :description="$performance->description"
 :image="$performance->image"
 />
+<!-- Review Form -->
+@auth
+                        <x-review-form :performanceId="$performance->id"/>
+                    @else
+                        <p class="mt-4 text-blue-600">
+                            Please <a href="{{ route('login') }}" class="hover:underline">log in</a> to write a review.
+                        </p>
+                    @endauth
+
+                    <!-- Reviews Section -->
+                    <div class="mt-8">
+                        <h4 class="font-bold text-lg">Reviews:</h4>
+                        @forelse ($performance->reviews as $review)
+                            <div class="border-t mt-4 pt-4">
+                                <div class="flex items-center">
+                                    <p class="font-semibold">{{ $review->user->name }}</p>
+                                    <span class="ml-4 text-yellow-500">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                ★
+                                            @else
+                                                ☆
+                                            @endif
+                                        @endfor
+                                    </span>
+                                </div>
+                                <p class="mt-2">{{ $review->content }}</p>
+                                <p class="text-xs text-gray-600">{{ $review->created_at->diffForHumans() }}</p>
+                            </div>
+                        @empty
+                            <p class="mt-4">No reviews yet. Be the first to review this performance!</p>
+                        @endforelse
+                    </div>
 </div>
 </div>
 </div>

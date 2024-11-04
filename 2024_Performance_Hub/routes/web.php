@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,7 @@ Route::get('/performances/{performance}/edit', [PerformanceController::class, 'e
 Route::put('/performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
 
 Route::delete('/performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
+
+Route::post('/performances/{performance}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 require __DIR__.'/auth.php';
