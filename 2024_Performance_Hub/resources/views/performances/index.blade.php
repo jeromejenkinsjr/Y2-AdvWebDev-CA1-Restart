@@ -17,7 +17,7 @@
 
                     <!-- Search Form -->
                     <form action="{{ route('performances.index') }}" method="GET" class="mb-6">
-                        <div class="flex items-center">
+                        <div class="flex items-center space-x-4 mb-4">
                             <input 
                                 type="text" 
                                 name="search" 
@@ -25,8 +25,20 @@
                                 value="{{ request('search') }}" 
                                 class="w-full border-gray-300 rounded-md shadow-sm p-2"
                             />
+
+                            <!-- Sort By Dropdown -->
+                            <select name="sort" class="w-full sm:w-1/4 border-gray-300 rounded-md shadow-sm p-2">
+                                <option value="">Sort By</option>
+                                <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>
+                                    Title (A - Z)
+                                </option>
+                                <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>
+                                    Title (Z - A)
+                                </option>
+                            </select>
+
                             <x-primary-button class="ml-2">
-                                Search
+                                Apply
                             </x-primary-button>
                         </div>
                     </form>
