@@ -27,4 +27,11 @@ class ReviewController extends Controller
         // Redirect back to the performance page with a success message
         return redirect()->route('performances.show', $performanceId)->with('success', 'Review added successfully!');
     }
+
+    public function destroy(Review $review)
+    {
+       // Deletes the performance from the database.
+    $review->delete();
+
+    }
 }
