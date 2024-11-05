@@ -34,4 +34,6 @@ Route::delete('/performances/{performance}', [PerformanceController::class, 'des
 
 Route::post('/performances/{performance}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
 require __DIR__.'/auth.php';

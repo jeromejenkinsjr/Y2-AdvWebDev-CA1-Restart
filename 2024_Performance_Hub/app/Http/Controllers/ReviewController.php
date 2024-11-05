@@ -30,8 +30,8 @@ class ReviewController extends Controller
 
     public function destroy(Review $review)
     {
-       // Deletes the performance from the database.
+       // Deletes the performance from the database using the method delete().
     $review->delete();
-
+    return redirect()->back()->with('success', 'Review deleted successfully.'); // When delete fuction is run 
     }
 }
