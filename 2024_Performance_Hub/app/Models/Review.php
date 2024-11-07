@@ -11,7 +11,7 @@ class Review extends Model
     // Relationships
     public function performance()
     {
-        return $this->belongsTo(Performance::class);
+        return $this->belongsTo(Performance::class); // The belongsTo method establishes a "belongs-to" relationship in Eloquent, indicating that each Review instance is associated with a single instance of either Performance or User. belongsTo() is used for the child side of a one-to-many relationship, meaning a Review (child) belongs to one Performance and one User (parents).
     }
 
     public function user()

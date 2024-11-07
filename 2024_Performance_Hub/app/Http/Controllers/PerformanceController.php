@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+// This PerformanceController manages CRUD operations for the Performance model which to represents musical performances. Key functions here include data filtering, sorting, and file handling, particularly for performance images, with a consistent user feedback mechanism through success messages.
+
 class PerformanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // The index method manages data retrieval and dynamic filtering. It includes a query initiation with Performance::query(), allowing conditional clauses based on user input for search and sort terms. This separation keeps search and sort logic isolated, enhancing scalability if more filters are added later.
     public function index(Request $request)
     {
 
@@ -148,6 +148,8 @@ class PerformanceController extends Controller
 
     $performance->updated_at = now();
     $performance->save();
+
+// The update method validates and selectively updates attributes. This is similar to store, but here each attribute is individually updated because Performance::update() is not utilized. Individual attribute updates ($performance->attribute = $request->attribute) provide flexibility for complex update logic. The approach is optimal when the update logic varies by attribute or requires additional processing.
 
     // Redirect back to the index page with a success message
     return to_route('performances.index')->with('success', 'Performance updated successfully!');
