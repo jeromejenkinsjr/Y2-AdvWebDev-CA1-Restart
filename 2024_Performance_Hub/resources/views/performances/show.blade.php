@@ -41,6 +41,7 @@
                                 <div class="flex items-center">
                                     <p class="font-semibold">{{ $review->user->name }}</p>
                                     <span class="ml-4 text-yellow-500">
+                                        <!-- This code uses a @for loop to iterate five times representing a 5-star rating system. In each loop an @if condition checks if the current index ($i) is less than or equal to the review's rating ($review->rating). If true, it displays a filled star (★); otherwise, it shows an empty star (☆). This efficiently renders the rating by filling stars up to the given rating value while the remaining stars stay unfilled. -->
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <= $review->rating)
                                                 ★
