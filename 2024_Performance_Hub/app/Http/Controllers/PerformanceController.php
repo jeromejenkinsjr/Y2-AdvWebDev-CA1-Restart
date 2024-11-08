@@ -96,6 +96,17 @@ class PerformanceController extends Controller
     public function show(Performance $performance)
     {
 
+// Log the user's view of this performance
+if (auth()->check()) {
+    $userView = UserView::create([
+        'user_id' => auth()->id(),
+        'composer' => $performance->composer,
+        'performance_id' => $performance->id,
+        'created_at' => now(),
+    ]);
+}
+
+
         $performance->load('reviews.user');
 
         return view('performances.show')->with('performance', $performance);
