@@ -11,10 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->addRouteMiddleware([
+        // Global middleware, if needed, like session handling
+        // You can append global middleware here
+        // $middleware->append(\App\Http\Middleware\CheckForMaintenanceMode::class);
+        
+        // Register route-specific middleware by alias
+        $middleware->alias([
             'admin' => \App\Http\Middleware\CheckAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->create();

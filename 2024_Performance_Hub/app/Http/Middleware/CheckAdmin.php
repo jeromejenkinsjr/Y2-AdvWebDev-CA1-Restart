@@ -4,24 +4,21 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckAdmin
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        // Ensure the authenticated user is an admin
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        // Assuming you have an `is_admin` field in your users table.
+        if (auth()->user() && auth()->user()->is_admin) {
             return $next($request);
         }
 
-        // Redirect if not authorized
-        return redirect('/')->with('error', 'Unauthorized access.');
+        // If not an admin, redirect or abort with 403 forbidden
+        return abort(403, 'Unauthorized');
     }
 }

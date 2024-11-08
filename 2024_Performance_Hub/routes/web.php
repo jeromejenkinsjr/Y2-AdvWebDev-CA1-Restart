@@ -15,27 +15,38 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// Admin-protected routes
+Route::middleware('admin')->group(function () {
+    Route::get('/performances/create', [PerformanceController::class, 'create'])->name('performances.create');
+    Route::post('/performances', [PerformanceController::class, 'store'])->name('performances.store');
+    Route::get('/performances/{performance}/edit', [PerformanceController::class, 'edit'])->name('performances.edit');
+    Route::put('/performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
+    Route::delete('/performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
 });
 
 
-Route::get('/performances', [PerformanceController::class, 'index'])->name('performances.index');
-Route::get('/performances/create', [PerformanceController::class, 'create'])->name('performances.create');
+// Public routes for all users
 Route::get('/performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
-Route::post('/performances', [PerformanceController::class, 'store'])->name('performances.store');
+Route::get('/performances', [PerformanceController::class, 'index'])->name('performances.index');
+
+// Route for authenticated users to create reviews
+Route::middleware('auth')->group(function () {
+    // Add a new review for a performance
+    Route::post('/performances/{performance}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // Delete a review
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+});
+
+// Routes for viewing performance details
+Route::get('/performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 // The 2 routes below are for displaying the edit form for a performance. {performance} is a route parameter representing the ID of the performance to be edited. The 'edit' method in PerformanceController is responsible for fetching the specific performance and returning the edit form view.
 
-Route::get('/performances/{performance}/edit', [PerformanceController::class, 'edit'])->name('performances.edit');
-Route::put('/performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
-
-Route::delete('/performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
-
-Route::post('/performances/{performance}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
-Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 require __DIR__.'/auth.php';
