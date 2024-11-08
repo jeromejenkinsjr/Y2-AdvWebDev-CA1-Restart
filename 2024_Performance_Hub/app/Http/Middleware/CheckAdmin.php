@@ -8,17 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckAdmin
 {
-    /**
-     * Handle an incoming request.
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        // Assuming you have an `is_admin` field in your users table.
-        if (auth()->user() && auth()->user()->is_admin) {
+        if ($request->user() && $request->user()->isAdmin()) {
             return $next($request);
         }
 
-        // If not an admin, redirect or abort with 403 forbidden
-        return abort(403, 'Unauthorized');
+        abort(403, 'Unauthorized action.');
     }
 }
