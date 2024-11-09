@@ -7,6 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Performance extends Model
 {
+
+    public function getSuggestedPerformances()
+{
+    $userId = auth()->id();
+
+    // Fetch the most recent composers viewed by the user
+    $recentComposers = UserView::where('user_id', $userId)
+                                ->orderBy('created_at', 'desc')
+                                ->pluck('composer')
+                                ->unique()
+                                ->take(3); // Limit to top 3 recent composers
+
+    // Fetch performances from those composers
+    $suggestedPerformances = Performance::whereIn('composer', $recentComposers)
+                                        ->limit(10)
+                                        ->get();
+
+    return $suggestedPerformances;
+}
+
     use HasFactory;
 
     protected $fillable = [
