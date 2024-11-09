@@ -11,8 +11,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Pass the suggested performances data to the dashboard view.
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+    $suggestedPerformances = $user ? $user->getSuggestedPerformances() : collect(); // If no user, return empty collection
+
+    return view('dashboard', compact('suggestedPerformances'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin-protected routes
