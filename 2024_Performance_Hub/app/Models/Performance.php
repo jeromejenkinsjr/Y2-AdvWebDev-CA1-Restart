@@ -10,7 +10,7 @@ class Performance extends Model
 
     public function getSuggestedPerformances()
 {
-    $userId = auth()->id();
+    $userId = $this->id;
 
     // Fetch the most recent composers viewed by the user
     $recentComposers = UserView::where('user_id', $userId)

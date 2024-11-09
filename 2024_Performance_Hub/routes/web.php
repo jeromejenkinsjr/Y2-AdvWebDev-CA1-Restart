@@ -3,6 +3,8 @@
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Models\UserView;
+use App\Models\Performance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 
