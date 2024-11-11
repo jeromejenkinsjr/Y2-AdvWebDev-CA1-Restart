@@ -8,6 +8,8 @@ The main features include:
 
 - **User Authentication**: Users can register, login, and manage their accounts.
 - **CRUD Operations**: Users can create, read, update, and delete content easily.
+- **Role-Based Access Control**: Admins have additional privileges, such as editing and deleting any content.
+- **Reviews and Suggested Performances**: Users can leave reviews on performances and receive suggestions based on their activity.
 
 ## Key Features
 
