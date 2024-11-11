@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a simple web application developed using the Laravel framework. The application allows users to Create, Read, Update, and Delete (CRUD) content of their choice, with a focus on simplicity and usability. Users must register and authenticate themselves to access the CRUD functionality.
+This project is a simple web application developed using the Laravel framework. The application allows users to Create, Read, Update, and Delete (CRUD) content of their choice, with a focus on simplicity and usability. Users can also add reviews and be given suggestions based on activity. Users must register and authenticate themselves to access the CRUD functionality.
 
 The main features include:
 
