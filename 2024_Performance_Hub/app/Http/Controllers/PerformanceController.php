@@ -26,10 +26,10 @@ class PerformanceController extends Controller
 
         if ($search) {
             $query->where('title', 'LIKE', '%' . $search . '%')
-                  ->orWhere('piece', 'LIKE', '%' . $search . '%')
-                  ->orWhere('composer', 'LIKE', '%' . $search . '%')
-                  ->orWhere('musician', 'LIKE', '%' . $search . '%')
-                  ->orWhere('event', 'LIKE', '%' . $search . '%');
+                ->orWhere('piece', 'LIKE', '%' . $search . '%')
+                ->orWhere('composer', 'LIKE', '%' . $search . '%')
+                ->orWhere('musician', 'LIKE', '%' . $search . '%')
+                ->orWhere('event', 'LIKE', '%' . $search . '%');
         }
     
         if ($sort == 'title_asc') {
