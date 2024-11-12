@@ -7,6 +7,7 @@ use App\Models\UserView;
 use App\Models\Performance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\Auth\GoogleController;
 
 
 Route::get('/', function () {
@@ -55,6 +56,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // The 2 routes below are for displaying the edit form for a performance. {performance} is a route parameter representing the ID of the performance to be edited. The 'edit' method in PerformanceController is responsible for fetching the specific performance and returning the edit form view.
+
+
+Route::get('/auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
 
 
 require __DIR__.'/auth.php';
