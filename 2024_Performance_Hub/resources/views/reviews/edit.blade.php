@@ -11,7 +11,6 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Edit Review:</h3>
 
-                    {{-- Use the review-form component for edit and create Reviews --}}
                     <x-review-form
                         :action="route('reviews.update', $review)"
                         :method="'PUT'"

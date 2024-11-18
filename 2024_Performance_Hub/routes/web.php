@@ -37,6 +37,8 @@ Route::middleware('admin')->group(function () {
 Route::get('/performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
 Route::get('/performances', [PerformanceController::class, 'index'])->name('performances.index');
 
+Route::resource('reviews', ReviewController::class);
+
 // Route for authenticated users to create reviews
 Route::middleware('auth')->group(function () {
     // Add a new review for a performance

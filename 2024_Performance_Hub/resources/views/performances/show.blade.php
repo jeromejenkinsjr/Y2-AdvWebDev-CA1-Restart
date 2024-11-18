@@ -35,35 +35,45 @@
 
                     <!-- Reviews Section -->
                     <div class="mt-8">
-                        <h4 class="font-bold text-lg">Reviews:</h4>
-                        @forelse ($performance->reviews as $review)
-                            <div class="border-t mt-4 pt-4">
-                                <div class="flex items-center">
-                                    <p class="font-semibold">{{ $review->user->name }}</p>
-                                    <span class="ml-4 text-yellow-500">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $review->rating)
-                                                ★
-                                            @else
-                                                ☆
-                                            @endif
-                                        @endfor
-                                    </span>
-                                </div>
-                                <p class="mt-2">{{ $review->content }}</p>
-                                <p class="text-xs text-gray-600">{{ $review->created_at->diffForHumans() }}</p>
-                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <x-danger-button type="submit">
-                                Delete
-                                </x-danger-button>
-                                </form>
-                            </div>
-                        @empty
-                            <p class="mt-4">No reviews yet. Be the first to review this performance!</p>
-                        @endforelse
-                    </div>
+    <h4 class="font-bold text-lg">Reviews:</h4>
+    @forelse ($performance->reviews as $review)
+        <div class="border-t mt-4 pt-4">
+            <div class="flex items-center">
+                <p class="font-semibold">{{ $review->user->name }}</p>
+                <span class="ml-4 text-yellow-500">
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= $review->rating)
+                            ★
+                        @else
+                            ☆
+                        @endif
+                    @endfor
+                </span>
+            </div>
+            <p class="mt-2">{{ $review->content }}</p>
+            <p class="text-xs text-gray-600">{{ $review->created_at->diffForHumans() }}</p>
+
+            <div class="flex space-x-2 mt-2">
+    <!-- Edit Button -->
+    <x-secondary-button type="button" onclick="window.location='{{ route('reviews.edit', $review->id) }}'">
+        Edit
+    </x-secondary-button>
+
+    <!-- Delete Form -->
+    <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+        @csrf
+        @method('DELETE')
+        <x-danger-button type="submit">
+            Delete
+        </x-danger-button>
+    </form>
+</div>
+        </div>
+    @empty
+        <p class="mt-4">No reviews yet. Be the first to review this performance!</p>
+    @endforelse
+</div>
+
 </div>
 </div>
 </div>
