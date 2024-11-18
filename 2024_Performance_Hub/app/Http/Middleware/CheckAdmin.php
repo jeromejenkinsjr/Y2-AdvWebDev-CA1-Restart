@@ -14,6 +14,6 @@ class CheckAdmin
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        return to_route('performances.index')->with('error', 'Unauthorised access.');
     }
 }
