@@ -34,4 +34,23 @@ class ReviewController extends Controller
     $review->delete();
     return redirect()->back()->with('success', 'Review deleted successfully.'); // When delete fuction is run 
     }
+
+    public function edit(Review $review)
+    {
+        // The code beneath checks if the user is the admin, and if not, it results to routing back to the index with the error message.
+        if (auth()->user()->id !== $review-> user_id && auth()->user()->role !== 'admin') {
+            return redirect()->route('performances.index')->with('error', 'Access denied.');
+        }
+
+        return view('reviews.edit', compact('review'));
+}
+
+    public function update(Request $request, Review $review)
+    {
+
+        $review->update($request->only(['rating', 'content']));
+
+        return redirect()->route('performances.show', $review->performance_id)
+        ->with('success', 'Review updated successfully.');
+    }
 }
