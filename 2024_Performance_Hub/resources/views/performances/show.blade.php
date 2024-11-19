@@ -19,11 +19,21 @@
 :title="$performance->title"
 :piece="$performance->piece"
 :composer="$performance->composer"
-:musician="$performance->musician"
 :event="$performance->event"
 :description="$performance->description"
 :image="$performance->image"
 />
+
+<!-- Musicians Section -->
+<div class="mt-4">
+    <h4 class="font-semibold text-md">Musicians:</h4>
+        <ul>
+            @foreach($performance->musicians as $musician)
+                <li>{{ $musician->name }}</li>
+            @endforeach
+        </ul>
+</div>
+
 <!-- Review Form -->
 @auth
                         <x-review-form :performanceId="$performance->id"/>

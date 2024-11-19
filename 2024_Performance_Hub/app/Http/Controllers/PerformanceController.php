@@ -28,9 +28,11 @@ class PerformanceController extends Controller
             $query->where('title', 'LIKE', '%' . $search . '%')
                 ->orWhere('piece', 'LIKE', '%' . $search . '%')
                 ->orWhere('composer', 'LIKE', '%' . $search . '%')
-                ->orWhere('musician', 'LIKE', '%' . $search . '%')
-                ->orWhere('event', 'LIKE', '%' . $search . '%');
-        }
+                ->orWhere('event', 'LIKE', '%' . $search . '%')
+                ->orWhereHas('musicians', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', '%' . $search . '%');
+        });
+    }
     
         if ($sort == 'title_asc') {
                 // Sort the query results by the 'title' attribute in ascending order when the sort parameter is set to 'title_asc'.
@@ -62,11 +64,12 @@ class PerformanceController extends Controller
 'title' => 'required',
 'piece' => 'required',
 'event' => 'required',
-'musician' => 'required',
 'duration' => 'required|date_format:H:i:s',
 'composer' => 'required',
 'description' => 'required|max:500',
 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
+'musicians' => 'required|array',
+'musicians.*' => 'exists:musicians,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -80,7 +83,6 @@ class PerformanceController extends Controller
 'title' => $request->title,
 'piece' => $request->piece,
 'composer' => $request->composer,
-'musician' => $request->musician,
 'duration' => $request->duration,
 'event' => $request->event,
 'description' => $request->description,
@@ -88,6 +90,8 @@ class PerformanceController extends Controller
 'created_at' => now(),
         'updated_at' => now(),
         ]);
+
+        $performance->musicians()->attach($request->musicians);
 
         return to_route('performances.index')->with('success', 'Book created successfully!');
     }
@@ -109,7 +113,7 @@ if (auth()->check()) {
 }
 
 
-        $performance->load('reviews.user');
+        $performance->load('reviews.user', 'musicians');
 
         return view('performances.show')->with('performance', $performance);
     }
