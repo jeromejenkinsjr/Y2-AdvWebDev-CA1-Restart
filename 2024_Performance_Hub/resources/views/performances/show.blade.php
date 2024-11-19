@@ -55,19 +55,24 @@
 
             <div class="flex space-x-2 mt-2">
     <!-- Edit Button -->
-    <x-secondary-button type="button" onclick="window.location='{{ route('reviews.edit', $review->id) }}'">
-        Edit
-    </x-secondary-button>
+    @if(auth()->user()->isAdmin() || auth()->id() === $review->user_id)
+        <x-secondary-button type="button" onclick="window.location='{{ route('reviews.edit', $review->id) }}'">
+            Edit
+        </x-secondary-button>
+    @endif
 
-    <!-- Delete Form -->
-    <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
-        @csrf
-        @method('DELETE')
-        <x-danger-button type="submit">
-            Delete
-        </x-danger-button>
-    </form>
+    <!-- Delete Button -->
+    @if(auth()->user()->isAdmin() || auth()->id() === $review->user_id)
+        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+            @csrf
+            @method('DELETE')
+            <x-danger-button type="submit">
+                Delete
+            </x-danger-button>
+        </form>
+    @endif
 </div>
+
         </div>
     @empty
         <p class="mt-4">No reviews yet. Be the first to review this performance!</p>
