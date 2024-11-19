@@ -15,7 +15,6 @@ return new class extends Migration
         $table->id();
         $table->string('title');
         $table->string('piece');
-        $table->string('musician');
         $table->string('event');
         $table->time('duration');
         $table->text('description')->nullable();

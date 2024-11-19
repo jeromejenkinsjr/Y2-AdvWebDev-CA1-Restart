@@ -15,9 +15,6 @@
     <!-- Composer -->
     <h2 class="text-gray-500 text-sm italic mb-2" style="font-size: 1rem;"><strong>Composer:</strong> {{ $composer }}</h2>
 
-    <!-- Musician -->
-    <h2 class="text-gray-500 text-sm italic mb-2" style="font-size: 1rem;"><strong>Musician:</strong> {{ $musician }}</h2>
-
     <!-- Event -->
     <h2 class="text-gray-500 text-sm italic mb-4" style="font-size: 1rem;"><strong>Event:</strong> {{ $event }}</h2>
 

@@ -21,7 +21,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Symphony No. 5',
             'piece' => 'First Movement',
-            'musician' => 'Ludwig Orchestra',
             'event' => 'Classical Evening',
             'duration' => '00:35:00',
             'description' => 'A powerful rendition of Beethoven\'s Symphony No. 5.',
@@ -33,7 +32,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'The Four Seasons',
             'piece' => 'Spring',
-            'musician' => 'Antonio Ensemble',
             'event' => 'Spring Gala',
             'duration' => '00:10:30',
             'description' => 'Vivaldi\'s Spring performed with an exciting interpretation.',
@@ -45,7 +43,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Piano Concerto No. 21',
             'piece' => 'Andante',
-            'musician' => 'Mozart Players',
             'event' => 'Mozart Festival',
             'duration' => '00:07:15',
             'description' => 'A serene and beautiful rendition of Mozart\'s Andante.',
@@ -57,7 +54,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Boléro',
             'piece' => 'Full Performance',
-            'musician' => 'Ravel Orchestra',
             'event' => 'Ravel Night',
             'duration' => '00:14:00',
             'description' => 'A mesmerizing performance of Ravel\'s Boléro.',
@@ -69,7 +65,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Clair de Lune',
             'piece' => 'Full Piece',
-            'musician' => 'Debussy Soloists',
             'event' => 'Moonlit Recital',
             'duration' => '00:05:30',
             'description' => 'Debussy\'s Clair de Lune played with grace and sensitivity.',
@@ -81,7 +76,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Nocturne in E-flat Major',
             'piece' => 'Op. 9 No. 2',
-            'musician' => 'Chopin Virtuosos',
             'event' => 'Romantic Nights',
             'duration' => '00:06:20',
             'description' => 'An enchanting performance of Chopin\'s Nocturne in E-flat Major.',
@@ -93,7 +87,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Ride of the Valkyries',
             'piece' => 'Full Performance',
-            'musician' => 'Wagner Philharmonic',
             'event' => 'Epic Classics',
             'duration' => '00:08:30',
             'description' => 'A thrilling rendition of Wagner\'s Ride of the Valkyries.',
@@ -105,7 +98,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Symphony No. 9',
             'piece' => 'Ode to Joy',
-            'musician' => 'Beethoven Choir & Orchestra',
             'event' => 'Joyful Harmony',
             'duration' => '00:12:00',
             'description' => 'Beethoven\'s Ode to Joy performed with grandeur and spirit.',
@@ -117,7 +109,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Eine kleine Nachtmusik',
             'piece' => 'First Movement',
-            'musician' => 'Mozart Chamber Orchestra',
             'event' => 'Serenade Under the Stars',
             'duration' => '00:05:00',
             'description' => 'Mozart\'s Eine kleine Nachtmusik, a joyful serenade.',
@@ -129,7 +120,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Hungarian Rhapsody No. 2',
             'piece' => 'Full Performance',
-            'musician' => 'Liszt Performers',
             'event' => 'Rhapsody Evening',
             'duration' => '00:10:45',
             'description' => 'An exhilarating performance of Liszt\'s Hungarian Rhapsody No. 2.',
@@ -141,7 +131,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'The Nutcracker Suite',
             'piece' => 'Dance of the Sugar Plum Fairy',
-            'musician' => 'Tchaikovsky Ballet Orchestra',
             'event' => 'Winter Wonderland',
             'duration' => '00:03:50',
             'description' => 'A magical rendition of Tchaikovsky\'s Dance of the Sugar Plum Fairy.',
@@ -153,7 +142,6 @@ class PerformanceSeeder extends Seeder
         [
             'title' => 'Symphony No. 40',
             'piece' => 'First Movement',
-            'musician' => 'Mozart Symphony Orchestra',
             'event' => 'Grand Symphony Night',
             'duration' => '00:08:10',
             'description' => 'A dynamic and expressive performance of Mozart\'s Symphony No. 40.',
