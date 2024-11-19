@@ -136,11 +136,12 @@ if (auth()->check()) {
         'title' => 'required',
         'piece' => 'required',
         'event' => 'required',
-        'musician' => 'required',
         'duration' => 'required|date_format:H:i:s',
         'composer' => 'required',
         'description' => 'required|max:500',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048', // Image is optional during update so that the user is not required to upload a new image at each update request.
+        'musicians' => 'required|array',
+        'musicians.*' => 'exists:musicians,id',
     ]);
 
     // Handle the uploaded image if there is one.
@@ -153,20 +154,20 @@ if (auth()->check()) {
         $performance->image = $imageName;
     }
 
-// I forgot to explain in the previous commit, but the reason for individually referencing $performance->attribute is that unlike the store method which uses Performance::create() to set all attributes at once, there's no direct equivalent method for updating all attributes together. This is why I update each attribute individually before calling $performance->save(). After looking into it, I did see I could have also used $performance->update() with an array of updated attributes which works similarly to create().
-
-    $performance->title = $request->title;
-    $performance->piece = $request->piece;
-    $performance->composer = $request->composer;
-    $performance->musician = $request->musician;
-    $performance->duration = $request->duration;
-    $performance->event = $request->event;
-    $performance->description = $request->description;
-
-    $performance->updated_at = now();
-    $performance->save();
+    $performance->update([
+        'title' => $request->title,
+        'piece' => $request->piece,
+        'composer' => $request->composer,
+        'duration' => $request->duration,
+        'event' => $request->event,
+        'description' => $request->description,
+        'updated_at' => now(),
+    ]);
 
 // The update method validates and selectively updates attributes. This is similar to store, but here each attribute is individually updated because Performance::update() is not utilized. Individual attribute updates ($performance->attribute = $request->attribute) provide flexibility for complex update logic. The approach is optimal when the update logic varies by attribute or requires additional processing.
+
+// Sync musicians to the performance
+$performance->musicians()->sync($request->musicians);
 
     // Redirect back to the index page with a success message
     return to_route('performances.index')->with('success', 'Performance updated successfully!');
