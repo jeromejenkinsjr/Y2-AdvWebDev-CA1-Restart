@@ -47,4 +47,9 @@ class Performance extends Model
     return $this->hasMany(Review::class);
 }
 
+public function musicians()
+{
+    return $this->belongsToMany(Musician::class);
+}
+
 }

@@ -60,4 +60,10 @@ class Performance extends Model
     {
         return $this->belongsToMany(Musician::class, 'musician_performance');
     }
+
+    public function performances()
+{
+    return $this->belongsToMany(Performance::class);
+}
+
 }
