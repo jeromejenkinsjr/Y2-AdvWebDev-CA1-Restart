@@ -116,20 +116,11 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <!-- Google Login Button -->
-<div id="g_id_onload"
-             data-client_id="1031265828074-d01vnc02u3u7shnnrd269e9rlfh7os1n.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse"
-             data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin"
-             data-type="standard"
-             data-shape="rectangular"
-             data-theme="outline"
-             data-text="sign_in_with"
-             data-size="large"
-             data-logo_alignment="left">
-        </div>
-    </div>
+<div class="button" id="google-signin-button">
+    Sign in with
+    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150' width='24' height='24' fill='%23FFFFFF'%3E%3Cpath d='M120 76.1c0-3.1-0.3-6.3-0.8-9.3H75.9v17.7h24.8c-1 5.7-4.3 10.7-9.2 13.9l14.8 11.5C115 101.8 120 90 120 76.1L120 76.1zM75.9 120.9c12.4 0 22.8-4.1 30.4-11.1L91.5 98.4c-4.1 2.8-9.4 4.4-15.6 4.4-12 0-22.1-8.1-25.8-18.9L34.9 95.6C42.7 111.1 58.5 120.9 75.9 120.9zM50.1 83.8c-1.9-5.7-1.9-11.9 0-17.6L34.9 54.4c-6.5 13-6.5 28.3 0 41.2L50.1 83.8zM75.9 47.3c6.5-0.1 12.9 2.4 17.6 6.9L106.6 41C98.3 33.2 87.3 29 75.9 29.1c-17.4 0-33.2 9.8-41 25.3l15.2 11.8C53.8 55.3 63.9 47.3 75.9 47.3z'%3E%3C/path%3E%3C/svg%3E" alt="Google Logo">
+</div>
+
 
 <script>
         function handleCredentialResponse(response) {
@@ -158,6 +149,35 @@
         console.error('Error during login:', error);
         alert('Login failed. Please try again.');
     }
+}
+
+document.getElementById('google-signin-button').addEventListener('click', function () {
+    google.accounts.id.prompt(); // Trigger the Google Sign-In prompt
+});
+
+// Initialize Google Sign-In
+google.accounts.id.initialize({
+    client_id: '1031265828074-d01vnc02u3u7shnnrd269e9rlfh7os1n.apps.googleusercontent.com',
+    callback: handleCredentialResponse,
+});
+
+// Handle the credential response
+function handleCredentialResponse(response) {
+    console.log('Encoded JWT ID token: ' + response.credential);
+
+    // Decode the JWT for user information (optional)
+    const base64Url = response.credential.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+        .split('')
+        .map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+        .join('')
+    );
+    console.log('Decoded JWT ID token:', JSON.parse(jsonPayload));
+
+    
+    window.location.href = '/dashboard';
 }
 
     </script>
