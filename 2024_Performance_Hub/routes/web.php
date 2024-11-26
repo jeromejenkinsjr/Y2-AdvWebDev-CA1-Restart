@@ -8,6 +8,7 @@ use App\Models\Performance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\MusicianController;
 
 
 Route::get('/', function () {
@@ -62,5 +63,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
 
+Route::resource('musicians', MusicianController::class);
 
 require __DIR__.'/auth.php';
