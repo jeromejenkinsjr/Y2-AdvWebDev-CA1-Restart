@@ -61,7 +61,11 @@ Route::middleware(['auth'])->group(function () {
 // The 2 routes below are for displaying the edit form for a performance. {performance} is a route parameter representing the ID of the performance to be edited. The 'edit' method in PerformanceController is responsible for fetching the specific performance and returning the edit form view.
 
 
-Route::get('/auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
 
 Route::resource('musicians', MusicianController::class);
 

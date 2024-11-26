@@ -6,9 +6,7 @@
     <title>Title Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-    <meta name="google-signin-client_id" content="1031265828074-d01vnc02u3u7shnnrd269e9rlfh7os1n.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         body, html {
             height: 100%;
@@ -118,46 +116,51 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <!-- Google Login Button -->
-<div class="button" onclick="handleGoogleSignIn()">
-    Sign in with
-    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150' width='24' height='24' fill='%23FFFFFF'%3E%3Cpath d='M120 76.1c0-3.1-0.3-6.3-0.8-9.3H75.9v17.7h24.8c-1 5.7-4.3 10.7-9.2 13.9l14.8 11.5C115 101.8 120 90 120 76.1L120 76.1zM75.9 120.9c12.4 0 22.8-4.1 30.4-11.1L91.5 98.4c-4.1 2.8-9.4 4.4-15.6 4.4-12 0-22.1-8.1-25.8-18.9L34.9 95.6C42.7 111.1 58.5 120.9 75.9 120.9zM50.1 83.8c-1.9-5.7-1.9-11.9 0-17.6L34.9 54.4c-6.5 13-6.5 28.3 0 41.2L50.1 83.8zM75.9 47.3c6.5-0.1 12.9 2.4 17.6 6.9L106.6 41C98.3 33.2 87.3 29 75.9 29.1c-17.4 0-33.2 9.8-41 25.3l15.2 11.8C53.8 55.3 63.9 47.3 75.9 47.3z'%3E%3C/path%3E%3C/svg%3E" alt="Google Logo">
-</div>
+<div id="g_id_onload"
+             data-client_id="1031265828074-d01vnc02u3u7shnnrd269e9rlfh7os1n.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-size="large"
+             data-logo_alignment="left">
+        </div>
+    </div>
 
 <script>
-  function initGoogleSignIn() {
-  gapi.load('auth2', function() {
-    gapi.auth2.init({
-      client_id: '1031265828074-d01vnc02u3u7shnnrd269e9rlfh7os1n.apps.googleusercontent.com', // Replace with your client ID
-      // Other configuration options
-    }).then(function() {
-      // Now you can safely call handleGoogleSignIn
-      // Attach the click event listener to your sign-in button
-      document.getElementById('googleSignInButton').addEventListener('click', handleGoogleSignIn);
-    });
-  });
+        function handleCredentialResponse(response) {
+    try {
+        if (!response.credential) throw new Error('No credential received');
+
+        console.log('Encoded JWT ID token:', response.credential);
+
+        // Decode the token
+        const base64Url = response.credential.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+            .split('')
+            .map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+        );
+        const userData = JSON.parse(jsonPayload);
+        console.log('Decoded JWT ID token:', userData);
+
+        // Redirect or update the page
+        window.location.href = '/dashboard';
+    } catch (error) {
+        console.error('Error during login:', error);
+        alert('Login failed. Please try again.');
+    }
 }
 
-function handleGoogleSignIn() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signIn().then(function(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId());
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-  });
-}
+    </script>
 
-// Call initGoogleSignIn to start the initialization process
-initGoogleSignIn();
-</script>
-
-        <!-- GitHub Login Button (Static for Now) -->
-        <div class="button">
-            Sign in with
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub Logo" style="filter: brightness(0) invert(1);">
-        </div>
-
-    </div>
 </body>
 </html>
