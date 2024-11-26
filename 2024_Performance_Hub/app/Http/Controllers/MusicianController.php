@@ -47,6 +47,8 @@ class MusicianController extends Controller
      */
     public function show(Musician $musician)
     {
+        $musician->load('performances'); // Load related performances
+
         return view('musicians.show', compact('musician'));
     }
 

@@ -34,6 +34,7 @@
                                     <td class="border px-4 py-2">{{ $musician->instrument }}</td>
                                     <td class="border px-4 py-2">{{ $musician->genre }}</td>
                                     <td class="border px-4 py-2">
+                                    <a href="{{ route('musicians.show', $musician->id) }}" class="btn btn-info">View Details</a>
                                         <a href="{{ route('musicians.edit', $musician->id) }}" class="btn btn-secondary">Edit</a>
                                         <form action="{{ route('musicians.destroy', $musician->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this musician?');">
                                             @csrf
