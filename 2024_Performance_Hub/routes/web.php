@@ -69,4 +69,11 @@ Route::get('/auth/google', function () {
 
 Route::resource('musicians', MusicianController::class);
 
+Route::fallback(function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect('/');
+});
+
 require __DIR__.'/auth.php';
