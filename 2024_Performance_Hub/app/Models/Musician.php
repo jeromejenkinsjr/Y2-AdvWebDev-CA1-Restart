@@ -12,7 +12,7 @@ class Musician extends Model
     protected $fillable = [
         'name',
         'instrument',
-        'biography',
+        'genre',
     ];
 
     /**

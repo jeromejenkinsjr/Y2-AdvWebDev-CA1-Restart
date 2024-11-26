@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Musician;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -77,7 +78,7 @@ class MusicianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Musician $musician)
     {
         $musician->delete();
 

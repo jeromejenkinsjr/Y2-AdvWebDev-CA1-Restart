@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('performances.index')" :active="request()->routeIs('performances.index')" class="text-gray-300 hover:text-white">
                         {{ __('Performances') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('musicians.index')" :active="request()->routeIs('musicians.index')" class="text-gray-300 hover:text-white">
+                        {{ __('Musicians') }}
+                    </x-nav-link>
                 </div>
             </div>
 
