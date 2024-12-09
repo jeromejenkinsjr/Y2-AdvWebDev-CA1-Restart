@@ -52,4 +52,9 @@ public function musicians()
     return $this->belongsToMany(Musician::class);
 }
 
+public function tags()
+{
+    return $this->belongsToMany(Tag::class);
+}
+
 }
