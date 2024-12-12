@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UserView;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 // This PerformanceController manages CRUD operations for the Performance model which to represents musical performances. Key functions here include data filtering, sorting, and file handling, particularly for performance images, with a consistent user feedback mechanism through success messages.
 
@@ -105,6 +104,7 @@ class PerformanceController extends Controller
     public function show(Performance $performance)
     {
 
+
 // Log the user's view of this performance
 if (auth()->check()) {
     $userView = UserView::create([
@@ -114,7 +114,6 @@ if (auth()->check()) {
         'created_at' => now(),
     ]);
 }
-
 
         $performance->load('reviews.user', 'musicians');
         $allTags = Tag::all();

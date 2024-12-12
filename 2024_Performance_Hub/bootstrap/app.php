@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Response as HttpResponse;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,6 +22,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Customize the response for 404 errors
+        $exceptions->respond(function (HttpResponse $response) { // Use the aliased HttpResponse
+            // Check for the 404 error
+            if ($response->getStatusCode() === 404) {
+                // Return a custom response with a view for 404 errors
+                return response()->view('not-found', [], 404);
+            }
+
+            // Return the default response for other status codes
+            return $response;
+        });
     })
     ->create();
