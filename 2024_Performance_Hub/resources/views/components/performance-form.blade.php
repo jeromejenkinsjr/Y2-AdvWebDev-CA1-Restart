@@ -1,4 +1,4 @@
-@props(['action', 'method', 'performance' => null])
+@props(['action', 'method', 'performance' => null, 'allTags' => []])
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
     @if($method === 'PUT' || $method === 'PATCH')

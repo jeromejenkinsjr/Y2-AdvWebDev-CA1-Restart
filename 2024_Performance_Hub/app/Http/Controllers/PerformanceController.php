@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Performance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UserView;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 // This PerformanceController manages CRUD operations for the Performance model which to represents musical performances. Key functions here include data filtering, sorting, and file handling, particularly for performance images, with a consistent user feedback mechanism through success messages.
 
@@ -116,8 +117,8 @@ if (auth()->check()) {
 
 
         $performance->load('reviews.user', 'musicians');
-
-        return view('performances.show')->with('performance', $performance);
+        $allTags = Tag::all();
+        return view('performances.show')->with('performance', $performance, 'allTags');
     }
 
     /**
@@ -125,6 +126,7 @@ if (auth()->check()) {
      */
     public function edit(Performance $performance)
     {
+        $performance->load('tags');
         $allTags = Tag::all();
         return view('performances.edit')->with('performance', $performance, 'allTags');
     }
@@ -145,7 +147,8 @@ if (auth()->check()) {
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048', // Image is optional during update so that the user is not required to upload a new image at each update request.
         'musicians' => 'required|array',
         'musicians.*' => 'exists:musicians,id',
-        'tags' => 'array'
+        'tags' => 'array',
+        'tags.*' => 'exists:tags,id' // Validate each tag exists in the tags table
     ]);
 
     // Handle the uploaded image if there is one.

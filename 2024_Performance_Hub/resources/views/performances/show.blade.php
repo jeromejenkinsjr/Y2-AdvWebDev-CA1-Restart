@@ -27,7 +27,7 @@
 <h3 class="font-semibold text-lg mb-4">Tags:</h3>
 <div class="flex flex-wrap gap-2">
     @foreach($performance->tags as $tag)
-        <x-tag :name="$tag->name" />
+    <x-tag :tag="$tag" />
     @endforeach
 </div>
 
