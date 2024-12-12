@@ -141,6 +141,21 @@
         @enderror
     </div>
 
+<!-- Tags Section -->
+<div class="mb-4">
+    <label for="tags" class="block text-sm text-gray-700">Tags</label>
+    <select name="tags[]" id="tags" multiple class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        @foreach($allTags as $tag)
+            <option value="{{ $tag->id }}" @if($performance && $performance->tags->contains($tag->id)) selected @endif>
+                {{ $tag->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('tags')
+        <p class="text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
     <!-- Display Existing Image if Available -->
     @isset($performance->image)
         <div class="mb-4">

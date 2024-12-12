@@ -52,7 +52,8 @@ class PerformanceController extends Controller
      */
     public function create()
     {
-        return view('performances.create');
+        $allTags = Tag::all();
+        return view('performances.create', compact('allTags'));
     }
 
     /**
@@ -70,6 +71,7 @@ class PerformanceController extends Controller
 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
 'musicians' => 'required|array',
 'musicians.*' => 'exists:musicians,id',
+'tags' => 'array'
         ]);
 
         if ($request->hasFile('image')) {
@@ -123,7 +125,8 @@ if (auth()->check()) {
      */
     public function edit(Performance $performance)
     {
-        return view('performances.edit')->with('performance', $performance);
+        $allTags = Tag::all();
+        return view('performances.edit')->with('performance', $performance, 'allTags');
     }
 
     /**
@@ -142,6 +145,7 @@ if (auth()->check()) {
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048', // Image is optional during update so that the user is not required to upload a new image at each update request.
         'musicians' => 'required|array',
         'musicians.*' => 'exists:musicians,id',
+        'tags' => 'array'
     ]);
 
     // Handle the uploaded image if there is one.
@@ -168,6 +172,9 @@ if (auth()->check()) {
 
 // Sync musicians to the performance
 $performance->musicians()->sync($request->musicians);
+
+// Sync tags to the performance
+$performance->tags()->sync($request->tags);
 
     // Redirect back to the index page with a success message
     return to_route('performances.index')->with('success', 'Performance updated successfully!');

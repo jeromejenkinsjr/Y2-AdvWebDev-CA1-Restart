@@ -25,6 +25,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MusicianSeeder::class);
 
-        $this->call(MusicianPerformanceSeeder::class);        
+        $this->call(MusicianPerformanceSeeder::class);  
+        
+        $this->call(TagSeeder::class);
+
+        $this->call(PerformanceTagSeeder::class);
+
     }
 }

@@ -24,6 +24,13 @@
 :image="$performance->image"
 />
 
+<h3 class="font-semibold text-lg mb-4">Tags:</h3>
+<div class="flex flex-wrap gap-2">
+    @foreach($performance->tags as $tag)
+        <x-tag :name="$tag->name" />
+    @endforeach
+</div>
+
 <!-- Musicians Section -->
 <div class="mt-4">
     <h4 class="font-semibold text-md">Musicians:</h4>
