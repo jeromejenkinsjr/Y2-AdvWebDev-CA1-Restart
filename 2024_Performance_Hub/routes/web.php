@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\MusicianController;
+use App\Http\Controllers\TagController;
 
 
 Route::get('/', function () {
@@ -68,6 +69,9 @@ Route::get('/auth/google', function () {
 });
 
 Route::resource('musicians', MusicianController::class);
+
+Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tags.show');
+
 
 Route::fallback(function () {
     if (auth()->check()) {
