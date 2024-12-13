@@ -14,6 +14,7 @@
                         :action="route('performances.update', $performance->id)"
                         :method="'PUT'"
                         :performance="$performance"
+                        :allTags="$allTags"
                     />
                 </div>
             </div>

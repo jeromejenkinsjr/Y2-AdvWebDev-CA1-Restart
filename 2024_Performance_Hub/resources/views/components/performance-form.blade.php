@@ -1,4 +1,5 @@
 @props(['action', 'method', 'performance' => null, 'allTags' => []])
+
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
     @if($method === 'PUT' || $method === 'PATCH')
@@ -71,10 +72,35 @@
         @enderror
     </div>
 
-    <!-- Musician -->
+ <!-- Tags Section -->
+ <div class="mb-4">
+    <label class="block text-sm text-gray-700">Tags</label>
+    <div class="flex flex-wrap gap-2">
+        @foreach($allTags as $tag)
+            <label for="tag-{{ $tag->id }}" class="flex items-center cursor-pointer">
+                <input
+                    type="checkbox"
+                    name="tags[]"
+                    id="tag-{{ $tag->id }}"
+                    value="{{ $tag->id }}"
+                    @if($performance && $performance->tags->contains($tag->id)) checked @endif
+                    class="hidden peer"
+                >
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-white {{ $tag->color }} rounded-full peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-blue-500">
+                    {{ $tag->name }}
+                </span>
+            </label>
+        @endforeach
+    </div>
+    @error('tags')
+        <p class="text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+
+    <!-- Musicians Section -->
     <div class="mb-4" id="musicians-section">
         <label for="musician" class="block text-sm text-gray-700">Musicians</label>
-        
         @if($performance && $performance->musicians)
             @foreach($performance->musicians as $musician)
                 <div class="musician-input flex items-center mt-2">
@@ -88,13 +114,9 @@
                 </div>
             @endforeach
         @endif
-        
         <!-- Container for adding new musicians -->
         <div id="new-musician-container"></div>
-        
-        <x-secondary-button>
-            + Add Musician
-        </x-secondary-button>
+        <x-secondary-button>+ Add Musician</x-secondary-button>
     </div>
 
     <!-- Event -->
@@ -140,21 +162,6 @@
             <p class="text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
-
-<!-- Tags Section -->
-<div class="mb-4">
-    <label for="tags" class="block text-sm text-gray-700">Tags</label>
-    <select name="tags[]" id="tags" multiple class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        @foreach($allTags as $tag)
-            <option value="{{ $tag->id }}" @if($performance && $performance->tags->contains($tag->id)) selected @endif>
-                {{ $tag->name }}
-            </option>
-        @endforeach
-    </select>
-    @error('tags')
-        <p class="text-sm text-red-600">{{ $message }}</p>
-    @enderror
-</div>
 
     <!-- Display Existing Image if Available -->
     @isset($performance->image)

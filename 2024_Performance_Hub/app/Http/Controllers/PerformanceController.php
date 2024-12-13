@@ -94,6 +94,8 @@ class PerformanceController extends Controller
         ]);
 
         $performance->musicians()->attach($request->musicians);
+        $performance->tags()->attach($request->input('tags', []));
+
 
         return to_route('performances.index')->with('success', 'Book created successfully!');
     }
@@ -124,17 +126,20 @@ if (auth()->check()) {
      * Show the form for editing the specified resource.
      */
     public function edit(Performance $performance)
-    {
-        $performance->load('tags');
-        $allTags = Tag::all();
-        return view('performances.edit')->with('performance', $performance, 'allTags');
-    }
+{
+    $performance->load('tags'); // Load related tags for the performance
+    $allTags = Tag::all(); // Get all available tags
+
+    // Pass both variables to the view using compact
+    return view('performances.edit', compact('performance', 'allTags'));
+}
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Performance $performance)
     {
+        
          // Validate the incoming data
     $request->validate([
         'title' => 'required',
@@ -175,11 +180,12 @@ if (auth()->check()) {
 // Sync musicians to the performance
 $performance->musicians()->sync($request->musicians);
 
+
 // Sync tags to the performance
-$performance->tags()->sync($request->tags);
+    $performance->tags()->sync($request->input('tags', []));
 
     // Redirect back to the index page with a success message
-    return to_route('performances.index')->with('success', 'Performance updated successfully!');
+    return redirect()->route('performances.index')->with('success', 'Performance updated successfully!');
     }
 
     /**
