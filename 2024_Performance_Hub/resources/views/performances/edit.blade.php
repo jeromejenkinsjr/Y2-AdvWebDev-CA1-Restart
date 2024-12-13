@@ -9,7 +9,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Edit Performance:</h3>
-                    {{-- Using the PerformanceForm component for performance editing --}}
                     <x-performance-form
                         :action="route('performances.update', $performance->id)"
                         :method="'PUT'"

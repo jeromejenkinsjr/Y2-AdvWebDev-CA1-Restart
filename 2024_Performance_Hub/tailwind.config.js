@@ -19,3 +19,21 @@ export default {
 
     plugins: [forms],
 };
+
+module.exports = {
+    safelist: [
+        'bg-green-500',
+        'bg-blue-500',
+        'bg-yellow-500',
+        'bg-red-500',
+        'bg-purple-500',
+        'bg-pink-500',
+        'bg-orange-500',
+        // Add all potential `bg-*` classes you use
+    ],
+    content: [
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.vue',
+    ],
+};
