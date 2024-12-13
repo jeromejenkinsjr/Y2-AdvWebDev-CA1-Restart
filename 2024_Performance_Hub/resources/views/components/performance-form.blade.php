@@ -1,4 +1,4 @@
-@props(['action', 'method', 'performance' => null, 'allTags' => []])
+@props(['action', 'method', 'performance' => null, 'allTags' => [], 'allMusicians' => []])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -99,25 +99,29 @@
 
 
     <!-- Musicians Section -->
-    <div class="mb-4" id="musicians-section">
-        <label for="musician" class="block text-sm text-gray-700">Musicians</label>
-        @if($performance && $performance->musicians)
-            @foreach($performance->musicians as $musician)
-                <div class="musician-input flex items-center mt-2">
-                    <input
-                        type="text"
-                        name="musicians[]"
-                        value="{{ $musician->name }}"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                    <x-danger-button>Remove</x-danger-button>
-                </div>
-            @endforeach
-        @endif
-        <!-- Container for adding new musicians -->
-        <div id="new-musician-container"></div>
-        <x-secondary-button>+ Add Musician</x-secondary-button>
+    <div class="mb-4">
+    <label class="block text-sm text-gray-700">Musicians</label>
+    <div class="flex flex-wrap gap-4">
+        @foreach($allMusicians as $musician)
+            <label for="musician-{{ $musician->id }}" class="flex items-center">
+                <input
+                    type="checkbox"
+                    name="musicians[]"
+                    id="musician-{{ $musician->id }}"
+                    value="{{ $musician->id }}"
+                    {{ $performance && $performance->musicians->contains($musician->id) ? 'checked' : '' }}
+                    class="mr-2"
+                >
+                {{ $musician->name }}
+            </label>
+        @endforeach
     </div>
+    @error('musicians')
+        <p class="text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+
 
     <!-- Event -->
     <div class="mb-4">
@@ -186,9 +190,9 @@
 <!-- Confirmation Dialog Script -->
 <!-- If the confirmation comes back as true (the window pop-up on the browser) it will run the code below which directs the user to the performances index page. -->
 <script>
-    // function confirmCancel() {
-    //     if (confirm('Are you sure you\'d like to cancel? All progress will be lost.')) {
-    //         window.location.href = "{{ route('performances.index') }}";
-    //     }
-    // }
+    function confirmCancel() {
+        if (confirm('Are you sure you\'d like to cancel? All progress will be lost.')) {
+            window.location.href = "{{ route('performances.index') }}";
+        }
+    }
 </script>

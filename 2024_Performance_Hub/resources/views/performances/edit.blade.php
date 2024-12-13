@@ -14,6 +14,7 @@
                         :method="'PUT'"
                         :performance="$performance"
                         :allTags="$allTags"
+                        :allMusicians="$allMusicians"
                     />
                 </div>
             </div>

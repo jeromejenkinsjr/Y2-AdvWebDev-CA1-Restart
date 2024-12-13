@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Musician;
 use App\Models\Tag;
 use App\Models\Performance;
 use App\Http\Controllers\Controller;
@@ -135,7 +136,13 @@ if (auth()->check()) {
     $allTags = Tag::all(); // Get all available tags
 
     // Pass both variables to the view using compact
-    return view('performances.edit', compact('performance', 'allTags'));
+    return view('performances.edit', [
+        'performance' => $performance,
+        'allTags' => $allTags,
+        'allMusicians' => Musician::all(),
+    ]);
+    
+
 }
 
     /**
@@ -152,8 +159,8 @@ if (auth()->check()) {
         'composer' => 'required',
         'description' => 'required|max:500',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
-        // 'musicians' => 'required|array',
-        // 'musicians.*' => 'exists:musicians,id',
+        'musicians' => 'required|array',
+        'musicians.*' => 'exists:musicians,id',
         'tags' => 'nullable|array',
         'tags.*' => 'exists:tags,id',
     ]);
@@ -162,10 +169,6 @@ if (auth()->check()) {
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images/'), $imageName);
         $performance->image = 'images/' . $imageName;
-    }
-
-    foreach($request->tags as $tag){
-        echo $tag;
     }
 
     $performance->update([
