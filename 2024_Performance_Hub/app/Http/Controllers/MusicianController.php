@@ -67,11 +67,26 @@ class MusicianController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'instrument' => 'required|max:255',
             'genre' => 'required|max:255',
+            'description' => 'nullable',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $musician->update($request->all());
+        $data = $request->only(['name', 'genre', 'description']);
+
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/musicians'), $imageName);
+        $data['image'] = 'images/musicians/' . $imageName;
+
+        // Remove old image if it exists
+        if ($musician->image && file_exists(public_path($musician->image))) {
+            unlink(public_path($musician->image));
+        }
+    }
+
+    $musician->update($data);
 
         return redirect()->route('musicians.index')->with('success', 'Musician updated successfully!');
 
