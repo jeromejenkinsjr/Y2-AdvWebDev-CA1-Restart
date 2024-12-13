@@ -60,45 +60,49 @@ class PerformanceController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-'title' => 'required',
-'piece' => 'required',
-'event' => 'required',
-'duration' => 'required|date_format:H:i:s',
-'composer' => 'required',
-'description' => 'required|max:500',
-'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
-'musicians' => 'required|array',
-'musicians.*' => 'exists:musicians,id',
-'tags' => 'array'
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'piece' => 'required',
+        'event' => 'required',
+        'duration' => 'required|date_format:H:i:s',
+        'composer' => 'required',
+        'description' => 'required|max:500',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
+        'musicians' => 'required|array',
+        'musicians.*' => 'exists:musicians,id',
+        'tags' => 'nullable|array',
+        'tags.*' => 'exists:tags,id',
+    ]);
 
-        if ($request->hasFile('image')) {
-
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images/'), $imageName);
-            $imageName = 'images/' . $imageName; 
-        }
-
-        Performance::create([
-'title' => $request->title,
-'piece' => $request->piece,
-'composer' => $request->composer,
-'duration' => $request->duration,
-'event' => $request->event,
-'description' => $request->description,
-'image' => $imageName,
-'created_at' => now(),
-        'updated_at' => now(),
-        ]);
-
-        $performance->musicians()->attach($request->musicians);
-        $performance->tags()->attach($request->input('tags', []));
-
-
-        return to_route('performances.index')->with('success', 'Book created successfully!');
+    $imageName = null;
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images/'), $imageName);
+        $imageName = 'images/' . $imageName;
     }
+
+    $performance = Performance::create([
+        'title' => $request->title,
+        'piece' => $request->piece,
+        'composer' => $request->composer,
+        'duration' => $request->duration,
+        'event' => $request->event,
+        'description' => $request->description,
+        'image' => $imageName,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    $performance->musicians()->attach($request->musicians);
+    dd('Before attach', $request->input('tags', [])); // Check incoming tags data
+$performance->tags()->attach($request->input('tags', []));
+dd('After attach', $performance->tags()->pluck('id')->toArray());
+
+
+    return redirect()->route('performances.index')->with('success', 'Performance created successfully!');
+}
+
 
     /**
      * Display the specified resource.
@@ -138,9 +142,8 @@ if (auth()->check()) {
      * Update the specified resource in storage.
      */
     public function update(Request $request, Performance $performance)
-    {
-        
-         // Validate the incoming data
+{
+
     $request->validate([
         'title' => 'required',
         'piece' => 'required',
@@ -148,21 +151,21 @@ if (auth()->check()) {
         'duration' => 'required|date_format:H:i:s',
         'composer' => 'required',
         'description' => 'required|max:500',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048', // Image is optional during update so that the user is not required to upload a new image at each update request.
-        'musicians' => 'required|array',
-        'musicians.*' => 'exists:musicians,id',
-        'tags' => 'array',
-        'tags.*' => 'exists:tags,id' // Validate each tag exists in the tags table
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,afif|max:2048',
+        // 'musicians' => 'required|array',
+        // 'musicians.*' => 'exists:musicians,id',
+        'tags' => 'nullable|array',
+        'tags.*' => 'exists:tags,id',
     ]);
 
-    // Handle the uploaded image if there is one.
     if ($request->hasFile('image')) {
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images/'), $imageName);
-        $imageName = 'images/' . $imageName;
+        $performance->image = 'images/' . $imageName;
+    }
 
-        // Update the image field in the model.
-        $performance->image = $imageName;
+    foreach($request->tags as $tag){
+        echo $tag;
     }
 
     $performance->update([
@@ -175,18 +178,12 @@ if (auth()->check()) {
         'updated_at' => now(),
     ]);
 
-// The update method validates and selectively updates attributes. This is similar to store, but here each attribute is individually updated because Performance::update() is not utilized. Individual attribute updates ($performance->attribute = $request->attribute) provide flexibility for complex update logic. The approach is optimal when the update logic varies by attribute or requires additional processing.
-
-// Sync musicians to the performance
-$performance->musicians()->sync($request->musicians);
-
-
-// Sync tags to the performance
+    $performance->musicians()->sync($request->musicians);
     $performance->tags()->sync($request->input('tags', []));
 
-    // Redirect back to the index page with a success message
+
     return redirect()->route('performances.index')->with('success', 'Performance updated successfully!');
-    }
+}
 
     /**
      * Remove the specified resource from storage.

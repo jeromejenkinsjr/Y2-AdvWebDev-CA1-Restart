@@ -186,9 +186,9 @@
 <!-- Confirmation Dialog Script -->
 <!-- If the confirmation comes back as true (the window pop-up on the browser) it will run the code below which directs the user to the performances index page. -->
 <script>
-    function confirmCancel() {
-        if (confirm('Are you sure you\'d like to cancel? All progress will be lost.')) {
-            window.location.href = "{{ route('performances.index') }}";
-        }
-    }
+    // function confirmCancel() {
+    //     if (confirm('Are you sure you\'d like to cancel? All progress will be lost.')) {
+    //         window.location.href = "{{ route('performances.index') }}";
+    //     }
+    // }
 </script>
