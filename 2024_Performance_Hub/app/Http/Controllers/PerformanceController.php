@@ -53,8 +53,9 @@ class PerformanceController extends Controller
      */
     public function create()
     {
+        $allMusicians = Musician::all();
         $allTags = Tag::all();
-        return view('performances.create', compact('allTags'));
+        return view('performances.create', compact('allTags', 'allMusicians'));
     }
 
     /**
@@ -96,9 +97,8 @@ class PerformanceController extends Controller
     ]);
 
     $performance->musicians()->attach($request->musicians);
-    dd('Before attach', $request->input('tags', [])); // Check incoming tags data
+    
 $performance->tags()->attach($request->input('tags', []));
-dd('After attach', $performance->tags()->pluck('id')->toArray());
 
 
     return redirect()->route('performances.index')->with('success', 'Performance created successfully!');

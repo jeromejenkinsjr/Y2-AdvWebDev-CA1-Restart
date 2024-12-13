@@ -31,13 +31,18 @@ class MusicianController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|max:255',
-            'instrument' => 'required|max:255',
-            'genre' => 'required|max:255',
+            'genre' => 'nullable|max:255',
+            'description' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        Musician::create($request->all());
+        
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('musicians', 'public');
+        }
+        
+        Musician::create($data);        
 
         return redirect()->route('musicians.index')->with('success', 'Musician added successfully!');
     }
