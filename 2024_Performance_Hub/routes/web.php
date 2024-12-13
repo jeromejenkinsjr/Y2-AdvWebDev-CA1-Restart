@@ -10,6 +10,7 @@ use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\MusicianController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\MapController;
 
 
 Route::get('/', function () {
@@ -17,6 +18,8 @@ Route::get('/', function () {
 });
 
 // Pass the suggested performances data to the dashboard view.
+
+Route::get('/distance', [MapController::class, 'showDistance']);
 
 Route::get('/dashboard', function () {
     $user = auth()->user();
@@ -71,7 +74,6 @@ Route::get('/auth/google', function () {
 Route::resource('musicians', MusicianController::class);
 
 Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tags.show');
-
 
 Route::fallback(function () {
     if (auth()->check()) {
