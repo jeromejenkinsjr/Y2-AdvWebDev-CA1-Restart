@@ -23,6 +23,8 @@ class PerformanceController extends Controller
         // Gets the sorting options from the request
         $sort = $request->input('sort');
 
+        $tagIds = $request->input('tags', []);
+
         $query = Performance::query();
 
         if ($search) {
@@ -35,6 +37,13 @@ class PerformanceController extends Controller
         });
     }
     
+
+    if (!empty($tagIds)) {
+        $query->whereHas('tags', function ($q) use ($tagIds) {
+            $q->whereIn('tags.id', $tagIds); // Specify tags.id to avoid ambiguity
+        });
+    }
+
         if ($sort == 'title_asc') {
                 // Sort the query results by the 'title' attribute in ascending order when the sort parameter is set to 'title_asc'.
             $query->orderBy('title', 'asc');
@@ -45,7 +54,8 @@ class PerformanceController extends Controller
 
         // Get all or filtered performances
         $performances = $query->get();
-       return view('performances.index', compact('performances'));
+        $allTags = Tag::all(); // Fetch all tags for the filter UI
+        return view('performances.index', compact('performances', 'allTags', 'search', 'sort', 'tagIds'));
     }
 
     /**
