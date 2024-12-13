@@ -11,8 +11,20 @@
                 <div class="p-6 bg-white text-gray-900">
                     <!-- Musician Details -->
                     <h3 class="font-semibold text-lg mb-4">Musician Details</h3>
-                    <p><strong>Instrument:</strong> {{ $musician->instrument }}</p>
-                    <p><strong>Genre:</strong> {{ $musician->genre }}</p>
+
+                    <!-- Musician Image -->
+                    @if($musician->image)
+                        <div class="mb-6">
+                            <img src="{{ asset($musician->image) }}" alt="{{ $musician->name }}" class="w-48 h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                    @endif
+
+                    <!-- Musician Genre and Description -->
+                    <p><strong>Genre:</strong> {{ $musician->genre ?? 'Not specified' }}</p>
+                    <div class="mt-4">
+                        <strong>Description:</strong>
+                        <p class="mt-2">{{ $musician->description ?? 'No description available.' }}</p>
+                    </div>
 
                     <!-- Performances List -->
                     <div class="mt-8">

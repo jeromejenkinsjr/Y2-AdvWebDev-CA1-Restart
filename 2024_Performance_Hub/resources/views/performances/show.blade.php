@@ -33,13 +33,24 @@
 
 <!-- Musicians Section -->
 <div class="mt-4">
-    <h4 class="font-semibold text-md">Musicians:</h4>
-        <ul>
-            @foreach($performance->musicians as $musician)
-                <li>{{ $musician->name }}</li>
-            @endforeach
-        </ul>
-</div>
+        <h4 class="font-semibold text-md">Musicians:</h4>
+            <ul class="space-y-4">
+                @foreach($performance->musicians as $musician)
+                    <li class="flex items-center">
+                        <!-- Musician Image -->
+                        @if($musician->image)
+                            <img src="{{ asset($musician->image) }}" alt="{{ $musician->name }}" class="w-10 h-10 object-cover rounded-full mr-4">
+                        @else
+                            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 mr-4">
+                                            N/A
+                                        </div>
+                                    @endif
+                                    <!-- Musician Name -->
+                                    <span class="font-semibold">{{ $musician->name }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
 <!-- Review Form -->
 @auth
